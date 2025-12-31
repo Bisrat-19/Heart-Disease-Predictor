@@ -47,10 +47,10 @@ ENV/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
-# ML models and data
+# ML models and data (ml/ files are ignored, backend/models are tracked for deployment)
 ml/heart_disease_uci.csv
 ml/*.pkl
-backend/models/*.pkl
+# backend/models/*.pkl  <-- Un-ignored for deployment
 
 # Other
 .DS_Store

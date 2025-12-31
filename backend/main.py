@@ -35,9 +35,6 @@ except Exception as e:
 class HeartData(BaseModel):
     features: List[float] = Field(..., min_items=13, max_items=13, description="List of 13 features in order: age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal")
     
-    # Optional: detailed fields if we wanted strict validation per field, but list is requested "JSON list (in correct feature order)"
-    # The user accepted "input features as a JSON list (in correct feature order)".
-    
 @app.get("/")
 def read_root():
     return {"message": "Heart Disease Prediction API is running."}

@@ -31,29 +31,20 @@ except Exception as e:
     dt_model = None
     scaler = None
 
-# Input Schema
 class HeartData(BaseModel):
     features: List[float] = Field(..., min_items=13, max_items=13, description="List of 13 features in order: age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal")
     
-@app.get("/")
-def read_root():
-    return {"message": "Heart Disease Prediction API is running."}
-
 @app.post("/predict")
 def predict(data: HeartData):
     if not lr_model or not dt_model or not scaler:
         raise HTTPException(status_code=500, detail="Models not loaded")
     
     try:
-        # Convert list to numpy array/dataframe
-        # The scaler expects 2D array
         features = np.array(data.features).reshape(1, -1)
         
-        # Logistic Regression (needs scaling)
         features_scaled = scaler.transform(features)
         lr_prediction = lr_model.predict(features_scaled)[0]
         
-        # Decision Tree (no scaling, but can handle scaled or unscaled usually, consistent to use unscaled as trained)
         dt_prediction = dt_model.predict(features)[0]
         
         return {

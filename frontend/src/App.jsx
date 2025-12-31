@@ -165,7 +165,8 @@ function App() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/predict', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://heart-disease-predictor-uj7r.onrender.com'
+      const response = await axios.post(`${apiUrl}/predict`, {
         features: featureList
       })
       setPrediction(response.data)
